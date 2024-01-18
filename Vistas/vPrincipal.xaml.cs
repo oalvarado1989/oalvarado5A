@@ -37,6 +37,7 @@ public partial class vPrincipal : ContentPage
         {
             statusMessage.Text = "Ingrese un nombre para eliminar";
         }
+        statusMessage.Text = App.personRepo.StatusMessage;
     }
 
     private void RefreshPersonList()
@@ -44,7 +45,7 @@ public partial class vPrincipal : ContentPage
         List<Persona> people = App.personRepo.GetAllPeople();
         ListaPersona.ItemsSource = people;
     }
-
+   
     private void btnActualizar_Clicked(object sender, EventArgs e)
     {
         statusMessage.Text = "";

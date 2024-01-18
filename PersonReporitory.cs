@@ -39,12 +39,10 @@ namespace oalvarado5A
 
                 Persona persona = new Persona() { Name = nombre };
                 result = conn.Insert(persona);
-
                 StatusMessage = string.Format("Filas agregadas", result, nombre);
             }
             catch (Exception ex)
             {
-
                 StatusMessage = string.Format("Error al insertar", nombre, ex.Message);
             }
         }
@@ -72,20 +70,12 @@ namespace oalvarado5A
 
                 if (string.IsNullOrEmpty(nombre))
                     throw new Exception("Nombre requerido");
-
-                // Obtener la persona por nombre
-                var persona = conn.Table<Persona>().FirstOrDefault(p => p.Name == nombre);
+                Persona persona = conn.Table<Persona>().FirstOrDefault(p => p.Name == nombre);
 
                 if (persona != null)
-                {
-                    // Eliminar la persona de la base de datos
+                {                 
                     conn.Delete(persona);
-
                     StatusMessage = string.Format("Persona eliminada", nombre);
-                }
-                else
-                {
-                    StatusMessage = string.Format("No se encontró la persona para eliminar", nombre);
                 }
             }
             catch (Exception ex)
@@ -101,20 +91,15 @@ namespace oalvarado5A
                 Init();
 
                 if (updatedPerson == null)
-                    throw new ArgumentNullException(nameof(updatedPerson), "La persona actualizada no puede ser nula");
+                    throw new ArgumentNullException(nameof(updatedPerson));
 
-                var existingPerson = conn.Table<Persona>().FirstOrDefault(p => p.Id == updatedPerson.Id);
+                Persona existingPerson = conn.Table<Persona>().FirstOrDefault(p => p.Id == updatedPerson.Id);
 
                 if (existingPerson != null)
                 {
                     existingPerson.Name = updatedPerson.Name;
                     conn.Update(existingPerson);
-
                     StatusMessage = string.Format("Persona actualizada", updatedPerson.Name);
-                }
-                else
-                {
-                    StatusMessage = "No se encontró la persona para actualizar";
                 }
             }
             catch (Exception ex)
